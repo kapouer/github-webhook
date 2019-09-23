@@ -234,7 +234,7 @@ function handleRules (logStream, rules, event) {
   }
 
   rules.forEach(function (rule) {
-    if (rule.event != '*' && rule.event != event.event)
+    if (rule.event != event.event)
       return
 
     if (!matchme(event.payload, rule.match))
