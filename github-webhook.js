@@ -162,9 +162,15 @@ function envFromPayload (payload, prefix, env) {
   if (!env) {
     env = {}
   }
-
-  if (payload.ref && payload.ref.startsWith('refs/heads/')) {
-    payload.branch = payload.ref.substring('refs/heads/'.length)
+  let ref = payload.ref
+  if (ref) {
+    if (!ref.startsWith('refs/heads/')) {
+      ref = payload.base_ref
+      if (ref && !ref.startsWith('refs/heads/')) ref = null
+    }
+  }
+  if (ref) {
+    payload.branch = ref.substring('refs/heads/'.length)
   } else {
     payload.branch = null
   }
